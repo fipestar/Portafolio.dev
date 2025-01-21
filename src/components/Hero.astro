@@ -1,0 +1,49 @@
+---
+const personalImageAlt = "Juan David"
+import Badge from './Badge.astro'
+import Linkedin from './icons/Linkedin.astro'
+import Mail from './icons/Mail.astro'
+import SocialPill from './SocialPill.astro'
+---
+
+<div class="max-w-xl">
+    <div class="flex gap-4 mb-4">
+        <img
+      class="rounded-full shadow-lg size-16"
+      src="https://avatars.githubusercontent.com/u/120397588?v=4"
+      alt={personalImageAlt}
+    />
+    <a
+      href="https://www.linkedin.com/in/juan-david-barbosa-neira-480a00216/"
+      target="_blank"
+      rel="noopener"
+      class="flex items-center transition md:justify-center md:hover:scale-105"
+    >
+      <Badge>Disponible para trabajar</Badge>
+    </a>
+    </div>
+
+    <h1
+    class="text-4xl font-bold tracking-tight text-gray-800 sm:text-5xl dark:text-white"
+  >
+    Hola, soy Juan Barbosa
+  </h1>
+  <p
+  class="mt-6 text-xl text-gray-800 dark:[&>strong]:text-yellow-200 [&>strong]:text-yellow-500 [&>strong]:font-semibold dark:text-gray-300"
+>
+Desarrollador Junior en Bogotá, apasionado por la creación de soluciones web funcionales y atractivas <strong
+    >Con experiencia en HTML, CSS, JavaScript, PHP y React.</strong
+  > Siempre dispuesto a aprender y asumir nuevos desafíos tecnológicos.
+</p>
+
+<nav class="flex flex-wrap gap-4 mt-8">
+    <SocialPill href="mailto:barbosaneira@gmail.com">
+      <Mail class="size-4" />
+      Contáctame
+    </SocialPill>
+    <SocialPill href="https://www.linkedin.com/in/juan-david-barbosa-neira-480a00216/">
+      <Linkedin class="size-4" />
+      LinkedIn
+    </SocialPill>
+  </nav>
+</div>

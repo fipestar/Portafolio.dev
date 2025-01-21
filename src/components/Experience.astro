@@ -1,0 +1,30 @@
+---
+import ExperienceItem from "./ExperienceItem.astro"
+
+const EXPERIENCE = [
+    {
+        date: 'Actualmente',
+        title: 'Desarrollador Full Stack',
+        company: 'DYS Ingeniería S.A.S',    
+        description: 'Desarrollé aplicaciones web con HTML, CSS, JavaScript, React.js, PHP, Node.js y MySQL. Diseñé interfaces responsivas, APIs RESTful y soluciones backend para una gestión eficiente de datos, optimizando tiempos de entrega y calidad del software.',
+        link: '#'
+    },
+    {
+        date: 'Noviembre 2024',
+        title: 'Proyecto Universitario',
+        company: 'ETITC', 
+        description: 'Desarrollé una aplicación web para la gestión de actividades académicas, integrando tecnologías como Node.js React TS NestJS Next.js. Diseñé una interfaz responsiva y optimizada, conectada a una base de datos eficiente para el manejo de usuarios y reportes. El proyecto destacó por mejorar la organización y accesibilidad de los procesos académicos.',
+        link: '#'
+    }
+]
+---
+<ol class="relative mt-16">
+    {
+      EXPERIENCE.map((experience) => (
+        <li class="">
+          <ExperienceItem {...experience} />
+        </li>
+      ))
+    }
+  </ol>        
+    
