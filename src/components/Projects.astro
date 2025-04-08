@@ -1,51 +1,37 @@
 ---
+import { useState } from "react";
 import LinkButton from "./LinkButton.astro";
 import GitHub from "./icons/GitHub.astro";
 import Link from "./icons/Link.astro";
 import Html from "./icons/Html.astro";
 import Css from "./icons/Css.astro";
-import { Image } from "astro:assets";
 import JavaScript from "./icons/JavaScript.astro";
 import PHP from "./icons/Php.astro";
 import Node from "./icons/Node.astro";
 import MYSQL from "./icons/Mysql.astro";
 
 const TAGS = {
-    HTML: {
-        name: "HTML",
-        class: "bg-red-500 text-white",
-        icon: Html,
-    },
-    CSS: {
-        name: "CSS",
-        class: "bg-blue-500 text-white",
-        icon: Css,
-    },
-    JAVASCRIPT: {
-        name: "JavaScript",
-        class: "bg-yellow-500 text-white",
-        icon: JavaScript,
-    },
-    PHP: {
-        name: "PHP",
-        class: "bg-purple-500 text-white",
-        icon: PHP,
-    },
-    NODE: {
-        name: "Node.js",
-        class: "bg-green-500 text-white",
-        icon: Node,
-    },
-    MYSQL: {
-        name: "MySQL",
-        class: "bg-blue-500 text-white",
-        icon: MYSQL,
-    }
-
-}
-
+  HTML: { name: "HTML", icon: Html, class: "bg-orange-100 text-orange-800" },
+  CSS: { name: "CSS", icon: Css, class: "bg-blue-100 text-blue-800" },
+  JAVASCRIPT: {
+    name: "JavaScript",
+    icon: JavaScript,
+    class: "bg-yellow-100 text-yellow-800",
+  }, 
+  PHP: { name: "PHP", icon: PHP, class: "bg-purple-100 text-purple-800" },
+  NODE: { name: "Node.js", icon: Node, class: "bg-green-100 text-green-800" },
+  MYSQL: { name: "MySQL", icon: MYSQL, class: "bg-sky-100 text-sky-800" },
+};
 
 const PROJECTS = [
+   {
+        title: "UpTask",
+        description: "es una aplicación web fullstack desarrollada con PHP, JavaScript, SCSS y MySQL. Permite a los usuarios gestionar sus proyectos y tareas de manera intuitiva, con autenticación de usuarios, vistas protegidas y una experiencia interactiva sin recargas de página. La aplicación incluye un sistema de notificaciones y un diseño responsivo, optimizando la usabilidad en dispositivos móviles.",
+        link: 'https://github.com/fipestar/UpTask',
+        github:"https://github.com/fipestar/UpTask",
+        image: '/projects/UpTask.jpg',
+        tags: [TAGS.HTML, TAGS.CSS, TAGS.JAVASCRIPT, TAGS.NODE, TAGS.PHP, TAGS.MYSQL],
+    },
     {
         title: "App Salon",
         description: "Este es un sistema web diseñado para la gestión de reservas de citas, originalmente desarrollado para un salón de belleza, pero adaptable a cualquier tipo de negocio que requiera agendamiento de servicios. Este proyecto fue construido utilizando PHP, MySQL y JavaScript, con un enfoque en la seguridad, la experiencia del usuario y la escalabilidad.",
@@ -64,58 +50,110 @@ const PROJECTS = [
     },
        
 ]
+
+const CATEGORIES = [
+  { name: "Proyectos Fullstack", filter: "fullstack" },
+  { name: "Proyectos con React y TypeScript", filter: "react-ts" },
+  { name: "Proyectos con JavaScript Vanilla", filter: "vanilla-js" },
+];
+
 ---
-<div class="flex flex-col gap-y-16">
-    {
-      PROJECTS.map(({ image, title, description, tags, link, github }) => (
-      <article class="flex flex-col space-x-0 space-y-8 group md:flex-row md:space-x-8 md:space-y-0">
-    <div class="w-full md:w-1/2">
-      <div class="relative flex flex-col items-center col-span-6 row-span-5 gap-8 transition duration-500 ease-in-out transform shadow-xl overflow-clip rounded-xl sm:rounded-xl md:group-hover:-translate-y-1 md:group-hover:shadow-2xl lg:border lg:border-gray-800 lg:hover:border-gray-700 lg:hover:bg-gray-800/50">
-        <img alt="Recién llegado vs 5 años en Nueva Zelanda" class="object-cover object-top w-full h-56 transition duration-500 sm:h-full md:scale-110 md:group-hover:scale-105" loading="lazy" src={image} />
-      </div>
+<div class="flex flex-col gap-y-16" id="projects-container">
+    <div class="mb-4 flex space-x-4">
+      {CATEGORIES.map(({ name, filter }) => (
+        <button
+          class="filter-btn px-4 py-2 rounded-lg transition-all duration-300 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-300"
+          data-filter={filter}
+        >
+          {name}
+        </button>
+      ))}
     </div>
   
-    <div class="w-full md:w-1/2 md:max-w-lg">
-      <h3 class="text-2xl font-bold text-gray-800 dark:text-gray-100">
-        {title}
-      </h3>
-      <div class="flex flex-wrap mt-2">
-        <ul class="flex flex-row mb-2 gap-x-2">
-            {tags.map((tag) => (
-              <li>
-                <span
-                  class={`flex gap-x-2 rounded-full text-xs   ${tag.class} py-1 px-2 `}
-                >
+    {PROJECTS.map(({ image, title, description, tags, link, github }) => {
+      const tagNames = tags.map(tag => tag.name.toLowerCase()).join(" ");
+      return (
+        <article
+          class="project flex flex-col space-x-0 space-y-8 group md:flex-row md:space-x-8 md:space-y-0"
+          data-tags={tagNames}
+        >
+          <div class="w-full md:w-1/2">
+            <div class="relative flex flex-col items-center col-span-6 row-span-5 gap-8 transition duration-500 ease-in-out transform shadow-xl overflow-clip rounded-xl sm:rounded-xl md:group-hover:-translate-y-1 md:group-hover:shadow-2xl lg:border lg:border-gray-800 lg:hover:border-gray-700 lg:hover:bg-gray-800/50">
+              <img
+                alt={title}
+                class="object-cover object-top w-full h-56 transition duration-500 sm:h-full md:scale-110 md:group-hover:scale-105"
+                loading="lazy"
+                src={image}
+              />
+            </div>
+          </div>
+  
+          <div class="w-full md:w-1/2 md:max-w-lg">
+            <h3 class="text-2xl font-bold text-gray-800 dark:text-gray-100">{title}</h3>
+            <ul class="flex flex-row mb-2 gap-x-2 mt-2">
+              {tags.map((tag) => (
+                <li>
+                  <span class={`flex gap-x-2 rounded-full text-xs ${tag.class} py-1 px-2`}>
                     <tag.icon class="size-4" />
                     {tag.name}
-                </span>
-              </li>
-            ))}
-          </ul>
-  
-        <div class="mt-2 text-gray-700 dark:text-gray-400">{description}</div>
-        <footer class="flex items-end justify-start mt-4 gap-x-4">
-            {github && (
-              <LinkButton href={github}>
-                <GitHub class="size-6" />
-                Code
-                
-              </LinkButton>
-            )}
-            {link && (
-              <LinkButton href={link}>
-                <Link class="size-4" />
-                Preview
-              </LinkButton>
-            )}
-          </footer>
-      </div>
-    </div>
-  </article>
-      ))
-    }
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <div class="mt-2 text-gray-700 dark:text-gray-400">{description}</div>
+            <footer class="flex items-end justify-start mt-4 gap-x-4">
+              {github && (
+                <LinkButton href={github}>
+                  <GitHub class="size-6" />
+                  Code
+                </LinkButton>
+              )}
+              {link && (
+                <LinkButton href={link}>
+                  <Link class="size-4" />
+                  Preview
+                </LinkButton>
+              )}
+            </footer>
+          </div>
+        </article>
+      );
+    })}
   </div>
   
+  <script is:inline>
+    const buttons = document.querySelectorAll(".filter-btn");
+    const projects = document.querySelectorAll(".project");
   
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const selected = btn.dataset.filter;
+  
+        // Quitar clases activas de todos los botones
+        buttons.forEach((b) => {
+          b.classList.remove("bg-blue-500", "text-white");
+          b.classList.add("bg-gray-200", "dark:bg-gray-700", "text-gray-800", "dark:text-gray-300");
+        });
+  
+        // Activar el botón clickeado
+        btn.classList.remove("bg-gray-200", "dark:bg-gray-700", "text-gray-800", "dark:text-gray-300");
+        btn.classList.add("bg-blue-500", "text-white");
+  
+        // Mostrar u ocultar proyectos
+        projects.forEach((project) => {
+          const tags = project.dataset.tags;
+          if (
+            (selected === "fullstack" && tags.includes("php")) ||
+            (selected === "react-ts" && tags.includes("vanilla")) ||
+            (selected === "vanilla-js" && tags.includes("vanilla"))
+          ) {
+            project.style.display = "flex";
+          } else {
+            project.style.display = "none";
+          }
+        });
+      });
+    });
+  </script>
   
   

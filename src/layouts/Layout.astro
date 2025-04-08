@@ -3,7 +3,7 @@ import "@fontsource-variable/onest"
 
 import Header from "../components/Header.astro"
 import Footer from "../components/Footer.astro"
-import { ViewTransitions } from "astro:transitions"
+import { ViewTransitions } from "astro:transitions"  // Importa la API de transición de vistas de Astro para mejorar la navegación sin recargar la página.
 
 interface Props {
   title: string
@@ -47,10 +47,10 @@ const { description, title } = Astro.props
 
       body {
         color: rgba(17, 17, 17, 0.9);
-        display: flex;
+        display: flex; /*Organiza el contenido en columnas.*/ 
         flex-direction: column;
-        min-height: 100vh;
-        overscroll-behavior: none;
+        min-height: 100vh; /*Asegura que la página ocupe toda la altura disponible.*/ 
+        overscroll-behavior: none; /**Evita efectos no deseados al hacer scroll. */
       }
 
       @media (prefers-reduced-motion: reduce) {
