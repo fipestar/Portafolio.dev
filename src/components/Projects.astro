@@ -1,5 +1,4 @@
 ---
-import { useState } from "react";
 import LinkButton from "./LinkButton.astro";
 import GitHub from "./icons/GitHub.astro";
 import Link from "./icons/Link.astro";
@@ -9,6 +8,9 @@ import JavaScript from "./icons/JavaScript.astro";
 import PHP from "./icons/Php.astro";
 import Node from "./icons/Node.astro";
 import MYSQL from "./icons/Mysql.astro";
+import React from "./icons/React.astro";
+import Tailwind from "./icons/Tailwind.astro";
+import Typescript from "./icons/Typescript.astro";
 
 const TAGS = {
   HTML: { name: "HTML", icon: Html, class: "bg-orange-100 text-orange-800" },
@@ -21,6 +23,9 @@ const TAGS = {
   PHP: { name: "PHP", icon: PHP, class: "bg-purple-100 text-purple-800" },
   NODE: { name: "Node.js", icon: Node, class: "bg-green-100 text-green-800" },
   MYSQL: { name: "MySQL", icon: MYSQL, class: "bg-sky-100 text-sky-800" },
+  REACT: { name: "React", icon: React, class: "bg-cyan-100 text-cyan-800" },
+  TAILWIND: { name: "Tailwind CSS", icon: Tailwind, class: "bg-teal-100 text-teal-800" },
+  TYPESCRIPT: { name: "TypeScript", icon: Typescript, class: "bg-blue-100 text-blue-800" }
 };
 
 const PROJECTS = [
@@ -30,6 +35,7 @@ const PROJECTS = [
         link: 'https://github.com/fipestar/DevWebCamp',
         github:"https://github.com/fipestar/DevWebCamp",
         image: '/projects/Devwebcamp.jpg',
+        category: "fullstack",
         tags: [TAGS.HTML, TAGS.CSS, TAGS.JAVASCRIPT, TAGS.NODE, TAGS.PHP, TAGS.MYSQL],
     },
     {
@@ -38,6 +44,7 @@ const PROJECTS = [
         link: 'https://github.com/fipestar/UpTask',
         github:"https://github.com/fipestar/UpTask",
         image: '/projects/UpTask.jpg',
+        category: "fullstack",
         tags: [TAGS.HTML, TAGS.CSS, TAGS.JAVASCRIPT, TAGS.NODE, TAGS.PHP, TAGS.MYSQL],
     },
     {
@@ -46,15 +53,24 @@ const PROJECTS = [
         link: 'https://github.com/fipestar/App-Salon',
         github:"https://github.com/fipestar/App-Salon",
         image: '/projects/AppSalon.webp',
+        category: "fullstack",
         tags: [TAGS.HTML, TAGS.CSS, TAGS.JAVASCRIPT, TAGS.NODE, TAGS.PHP, TAGS.MYSQL],
+    },
+    {
+      title: "BookStore",
+      description: "Aplicación web de e-commerce especializada en la venta de libros, desarrollada como Single Page Application (SPA) con React 18 y TypeScript. El proyecto implementa un carrito de compras completamente funcional con persistencia de datos y una interfaz de usuario moderna y responsiva.",
+      link: 'https://bookstorefipestar.netlify.app/',
+      github: 'https://github.com/fipestar/Bookstore/tree/typescript',
+      image: '/projects/Bookstore.webp',
+      category: "react-ts",
+      tags: [TAGS.HTML, TAGS.CSS,TAGS.TAILWIND, TAGS.REACT, TAGS.TYPESCRIPT],
     }
        
 ]
 
 const CATEGORIES = [
   { name: "Proyectos Fullstack", filter: "fullstack" },
-  { name: "Proyectos con React y TypeScript", filter: "react-ts" },
-  { name: "Proyectos con JavaScript Vanilla", filter: "vanilla-js" },
+  { name: "Proyectos con React y TypeScript", filter: "react-ts" }
 ];
 
 ---
@@ -70,12 +86,13 @@ const CATEGORIES = [
       ))}
     </div>
   
-    {PROJECTS.map(({ image, title, description, tags, link, github }) => {
+    {PROJECTS.map(({ image, title, description, tags, link, github, category }) => {
       const tagNames = tags.map(tag => tag.name.toLowerCase()).join(" ");
       return (
         <article
           class="project flex flex-col space-x-0 space-y-8 group md:flex-row md:space-x-8 md:space-y-0"
           data-tags={tagNames}
+          data-category={category}
         >
           <div class="w-full md:w-1/2">
             <div class="relative flex flex-col items-center col-span-6 row-span-5 gap-8 transition duration-500 ease-in-out transform shadow-xl overflow-clip rounded-xl sm:rounded-xl md:group-hover:-translate-y-1 md:group-hover:shadow-2xl lg:border lg:border-gray-800 lg:hover:border-gray-700 lg:hover:bg-gray-800/50">
@@ -141,12 +158,8 @@ const CATEGORIES = [
   
         // Mostrar u ocultar proyectos
         projects.forEach((project) => {
-          const tags = project.dataset.tags;
-          if (
-            (selected === "fullstack" && tags.includes("php")) ||
-            (selected === "react-ts" && tags.includes("vanilla")) ||
-            (selected === "vanilla-js" && tags.includes("vanilla"))
-          ) {
+          const category = project.dataset.category;
+          if (selected === category) {
             project.style.display = "flex";
           } else {
             project.style.display = "none";
