@@ -7,6 +7,8 @@ import Css from "./icons/Css.astro";
 import JavaScript from "./icons/JavaScript.astro";
 import PHP from "./icons/Php.astro";
 import Node from "./icons/Node.astro";
+import Express from "./icons/Express.astro";
+import PostgreSQL from "./icons/PostgreSQL.astro";
 import MYSQL from "./icons/Mysql.astro";
 import React from "./icons/React.astro";
 import Tailwind from "./icons/Tailwind.astro";
@@ -22,7 +24,9 @@ const TAGS = {
   }, 
   PHP: { name: "PHP", icon: PHP, class: "bg-purple-100 text-purple-800" },
   NODE: { name: "Node.js", icon: Node, class: "bg-green-100 text-green-800" },
+  EXPRESS: { name: "Express", icon: Express, class: "bg-gray-100 text-gray-800" },
   MYSQL: { name: "MySQL", icon: MYSQL, class: "bg-sky-100 text-sky-800" },
+  POSTGRESQL: { name: "PostgreSQL", icon: PostgreSQL, class: "bg-indigo-100 text-indigo-800" },
   REACT: { name: "React", icon: React, class: "bg-cyan-100 text-cyan-800" },
   TAILWIND: { name: "Tailwind CSS", icon: Tailwind, class: "bg-teal-100 text-teal-800" },
   TYPESCRIPT: { name: "TypeScript", icon: Typescript, class: "bg-blue-100 text-blue-800" }
@@ -66,13 +70,13 @@ const PROJECTS = [
       tags: [TAGS.HTML, TAGS.CSS,TAGS.TAILWIND, TAGS.REACT, TAGS.TYPESCRIPT],
     },    
     {
-      title: "Gestor de Clientes",
-      description: "Aplicación full-stack de gestión de clientes que demuestra el dominio de tecnologías modernas de frontend y arquitectura de estado escalable. Desarrollada con React 19, TypeScript, Zustand y Tailwind CSS v4.",
-      link: 'https://clientes-zustand.vercel.app/',
-      github: 'https://github.com/fipestar/Clientes-Zustand',
-      image: '/projects/clientes-zustand.webp',
+      title: "Sistema de Turnos",
+      description: "Sistema de turnos full stack desarrollado con React y TypeScript en el frontend, y Node.js + Express + TypeScript en el backend. Implementa un CRUD completo de citas (crear, listar, editar, eliminar), routing del lado cliente con React Router, consumo de API REST con Axios, validaciones de datos y persistencia en base de datos con Sequelize/PostgreSQL, siguiendo una arquitectura modular orientada a escalabilidad.",
+      link: 'https://sistema-turnos-one.vercel.app/',
+      github: 'https://github.com/fipestar/Sistema_Turnos_Client',
+      image: '/projects/SistemaTurnos.webp',
       category: "react-ts",
-      tags: [TAGS.HTML, TAGS.CSS,TAGS.TAILWIND, TAGS.REACT, TAGS.TYPESCRIPT],
+      tags: [TAGS.HTML, TAGS.CSS,TAGS.TAILWIND, TAGS.REACT, TAGS.TYPESCRIPT, TAGS.NODE, TAGS.EXPRESS, TAGS.POSTGRESQL],
     },
     {
       title: "Cotizador de Criptomonedas",
@@ -105,7 +109,7 @@ const CATEGORIES = [
       ))}
     </div>
   
-    {PROJECTS.map(({ image, title, description, tags, link, github, category }) => {
+    {PROJECTS.map(({ image, title, description, tags, link, github, category }, index) => {
       const tagNames = tags.map(tag => tag.name.toLowerCase()).join(" ");
       return (
         <article
@@ -118,7 +122,12 @@ const CATEGORIES = [
               <img
                 alt={title}
                 class="object-cover object-top w-full h-56 transition duration-500 sm:h-full md:scale-110 md:group-hover:scale-105"
-                loading="lazy"
+                width="1200"
+                height="675"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                decoding="async"
+                loading={index === 0 ? "eager" : "lazy"}
+                fetchpriority={index === 0 ? "high" : "auto"}
                 src={image}
               />
             </div>
@@ -126,9 +135,9 @@ const CATEGORIES = [
   
           <div class="w-full md:w-1/2 md:max-w-lg">
             <h3 class="text-2xl font-bold text-gray-800 dark:text-gray-100">{title}</h3>
-            <ul class="flex flex-row mb-2 gap-x-2 mt-2">
+            <ul class="flex flex-wrap mb-2 gap-2 mt-2">
               {tags.map((tag) => (
-                <li>
+                <li class="shrink-0">
                   <span class={`flex gap-x-2 rounded-full text-xs ${tag.class} py-1 px-2`}>
                     <tag.icon class="size-4" />
                     {tag.name}
